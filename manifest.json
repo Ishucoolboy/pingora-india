@@ -1,0 +1,17 @@
+{
+  "name": "Pingora — Chat & Connect",
+  "short_name": "Pingora",
+  "description": "Every connection starts with a conversation.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f8f6",
+  "theme_color": "#167a58",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
