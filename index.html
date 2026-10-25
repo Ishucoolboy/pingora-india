@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#167a58">
+  <meta name="description" content="Pingora — every connection starts with a conversation.">
+  <title>Pingora — Chat & Connect</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <style>
+    :root{--green:#167a58;--green2:#e5f5ec;--ink:#17221d;--muted:#77827b;--line:#e7eee9;--bg:#f5f8f6}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink)}
+    .app{max-width:480px;min-height:100dvh;margin:auto;background:#fff;padding-bottom:76px;box-shadow:0 0 30px #102b1a0c}
+    header{padding:20px 18px 14px;background:linear-gradient(120deg,#eef9f2,#fff8ee);border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:850;letter-spacing:-.8px}.logo{width:40px;height:40px;border-radius:14px;background:var(--green);color:white;display:grid;place-items:center;font-size:21px}
+    .tag{margin-top:4px;font-size:10px;letter-spacing:1.4px;color:var(--green);font-weight:800}
+    .search{display:flex;gap:9px;margin-top:17px;padding:12px;background:#fff;border:1px solid var(--line);border-radius:13px;color:var(--muted)}.search input{border:0;outline:0;flex:1;min-width:0;font-size:14px}
+    main{padding:16px}.heading{display:flex;justify-content:space-between;align-items:center;margin:8px 0 12px}.heading h2{font-size:17px;margin:0}.muted{font-size:12px;color:var(--muted)}
+    .stories{display:flex;gap:15px;overflow:auto;padding:4px 0 18px}.story{text-align:center;min-width:55px;font-size:11px;color:var(--muted)}.avatar{width:48px;height:48px;margin:0 auto 6px;border-radius:17px;background:#eaf4ed;display:grid;place-items:center;font-size:23px;border:2px solid #d5eade}
+    .chat{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #f0f3f0;cursor:pointer}.chat .avatar{width:51px;height:51px;flex-shrink:0;margin:0;border:0}.details{flex:1;min-width:0}.name{font-size:14px;font-weight:750;display:flex;justify-content:space-between;gap:8px}.time{font-size:10px;color:#89948d;font-weight:500;white-space:nowrap}.preview{font-size:12px;color:var(--muted);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);height:70px;background:#ffffffef;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;padding-bottom:env(safe-area-inset-bottom)}
+    nav button{border:0;background:none;color:#7c8880;font-size:11px;display:flex;flex-direction:column;gap:4px;align-items:center;cursor:pointer}nav b{font-size:20px;font-weight:500}nav button.active{color:var(--green);font-weight:800}
+    .fab{position:fixed;bottom:87px;left:calc(50% + 150px);width:48px;height:48px;border:0;border-radius:16px;background:var(--green);color:white;font-size:25px;box-shadow:0 7px 18px #167a5838}
+    .note{margin-top:20px;padding:13px;background:#f5f8f6;border-radius:12px;color:#657269;font-size:12px;line-height:1.5}
+    @media(min-width:600px){body{padding:18px 0}.app{border-radius:25px;overflow:hidden;min-height:calc(100dvh - 36px)}nav{bottom:18px;border-radius:0 0 25px 25px}.fab{bottom:105px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand"><div class="logo">P</div><span>pingora<span style="color:var(--green)">.</span></span></div>
+    <div class="tag">EVERY CONNECTION STARTS WITH A CONVERSATION.</div>
+    <label class="search">⌕ <input id="search" placeholder="Search chats and people…" oninput="filterChats()"></label>
+  </header>
+  <main>
+    <div class="heading"><h2>Stories</h2><span class="muted">Your circle</span></div>
+    <div class="stories">
+      <div class="story"><div class="avatar">＋</div>Your story</div>
+      <div class="story"><div class="avatar">👩🏻</div>Priya</div>
+      <div class="story"><div class="avatar">🧑🏽</div>Rahul</div>
+      <div class="story"><div class="avatar">👨🏻‍💻</div>Arjun</div>
+      <div class="story"><div class="avatar">👩🏽‍🎨</div>Meera</div>
+    </div>
+    <div class="heading"><h2>Messages</h2><span class="muted">Demo preview</span></div>
+    <div id="chats">
+      <div class="chat" data-search="priya sharma reached home talk soon"><div class="avatar">👩🏻</div><div class="details"><div class="name">Priya Sharma <span class="time">10:42</span></div><div class="preview">Reached home, talk soon 😊</div></div></div>
+      <div class="chat" data-search="family group mummy sunday lunch"><div class="avatar">👨‍👩‍👧</div><div class="details"><div class="name">Family Group ❤️ <span class="time">10:18</span></div><div class="preview">Mummy: Sunday lunch at home?</div></div></div>
+      <div class="chat" data-search="rahul verma sent location"><div class="avatar">🧑🏽</div><div class="details"><div class="name">Rahul Verma <span class="time">09:56</span></div><div class="preview">Sent you the location 📍</div></div></div>
+      <div class="chat" data-search="jaipur startup circle meetup friday"><div class="avatar">🚀</div><div class="details"><div class="name">Jaipur Startup Circle <span class="time">09:21</span></div><div class="preview">Meetup confirmed for Friday</div></div></div>
+      <div class="chat" data-search="meera art studio order business"><div class="avatar">🎨</div><div class="details"><div class="name">Meera Art Studio <span class="time">Yesterday</span></div><div class="preview">Thanks for your order!</div></div></div>
+    </div>
+    <div class="note"><strong>Early prototype</strong><br>This is the first visual version. Messages are sample data only. Next we'll connect real accounts and live messaging.</div>
+  </main>
+  <button class="fab" onclick="alert('New chat will be connected after we add real user accounts.')">＋</button>
+  <nav>
+    <button class="active" onclick="tab(this,'Chats')"><b>▤</b>Chats</button>
+    <button onclick="tab(this,'Contacts')"><b>♙</b>Contacts</button>
+    <button onclick="tab(this,'Moments')"><b>◉</b>Moments</button>
+    <button onclick="tab(this,'Me')"><b>☻</b>Me</button>
+  </nav>
+</div>
+<script>
+function filterChats(){const q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.chat').forEach(c=>c.style.display=c.dataset.search.includes(q)?'flex':'none')}
+function tab(button,name){document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));button.classList.add('active');if(name!=='Chats')alert(name+' screen is the next build step.')}
+if('serviceWorker' in navigator && location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+</script>
+</body>
+</html>
